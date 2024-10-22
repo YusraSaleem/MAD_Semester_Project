@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:project_new/audio.dart';
+import 'package:sound_sweep/audio.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AudioDatabase {
@@ -73,17 +73,17 @@ class AudioDatabase {
     );
   }
 
-  updateTodo(Audio audio) async {
-    final db = await database;
-    return await db.update(
-      _tableName,
-      audio.toMap(), //data going to DB in a map format
-      where: "$_columnId = ?",
-      // can use todo.id instead of ? but increases chances of SQL injection,
-      //this ? means the first value in where args array, multiple ???? corrsponds to 1st,2nd,etc values of where args
-      whereArgs: [audio.id],
-    );
-  }
+  // updateTodo(Audio audio) async {
+  //   final db = await database;
+  //   return await db.update(
+  //     _tableName,
+  //     audio.toMap(), //data going to DB in a map format
+  //     where: "$_columnId = ?",
+  //     // can use todo.id instead of ? but increases chances of SQL injection,
+  //     //this ? means the first value in where args array, multiple ???? corrsponds to 1st,2nd,etc values of where args
+  //     whereArgs: [audio.id],
+  //   );
+  // }
 
   deleteAudio(int id) async {
     final db = await database;

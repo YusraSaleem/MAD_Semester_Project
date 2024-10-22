@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:project_new/audio.dart';
-import 'package:project_new/audio_provider.dart';
+import 'package:sound_sweep/audio.dart';
+import 'package:sound_sweep/audio_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddAudio extends StatefulWidget {

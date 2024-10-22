@@ -1,4 +1,4 @@
-package com.example.project_new
+package com.example.sound_sweep
 
 import io.flutter.embedding.android.FlutterActivity
 

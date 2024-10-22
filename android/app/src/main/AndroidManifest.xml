@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="project_new"
+        android:label="sound_sweep"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

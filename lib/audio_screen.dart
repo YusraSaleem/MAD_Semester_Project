@@ -5,10 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:project_new/add_audio.dart';
-//import 'package:project_new/audio.dart';
-//import 'package:project_new/audio_provider.dart';
-import 'package:project_new/save_screen.dart';
+import 'package:sound_sweep/add_audio.dart';
+//import 'package:sound_sweep/audio.dart';
+//import 'package:sound_sweep/audio_provider.dart';
+import 'package:sound_sweep/save_screen.dart';
 //import 'package:provider/provider.dart';
 
 class AudioScreen extends StatefulWidget {
@@ -67,7 +67,7 @@ class _AudioScreenPage extends State<AudioScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please select audio  file to play'),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 3),
         ),
       );
       print("No file selected to play");
@@ -113,6 +113,12 @@ class _AudioScreenPage extends State<AudioScreen> {
         }
       });
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No file selected for noise reduction'),
+          duration: Duration(seconds: 3),
+        ),
+      );
       print('No file selected for noise reduction');
     }
   }
@@ -133,11 +139,11 @@ class _AudioScreenPage extends State<AudioScreen> {
       await _audioPlayer.play(DeviceFileSource(_outputFilePath!));
     } else if (isPlaying1) {
       await _audioPlayer.pause();
-    } else {
+    } else if (_outputFilePath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please click reduce audio to apply noise reduction'),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
         ),
       );
       print("No reduced audio file available to play");
@@ -245,7 +251,7 @@ class _AudioScreenPage extends State<AudioScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Noise Reduction App"),
+        title: const Text("Sound Sweep"),
         actions: [
           TextButton(
             onPressed: () {
@@ -282,14 +288,24 @@ class _AudioScreenPage extends State<AudioScreen> {
                 //onPressed: _isSaved ? null : () => saveReducedAudio(),
                 onPressed: () {
                   //saveReducedAudio();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return AddAudio(outputFile: _outputFilePath);
-                      },
-                    ),
-                  );
+
+                  if (_outputFilePath != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return AddAudio(outputFile: _outputFilePath);
+                        },
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('No audio available to save'),
+                        duration: Duration(seconds: 5),
+                      ),
+                    );
+                  }
                 },
                 child: const Text("Save the audio"))
           ],

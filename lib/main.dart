@@ -1,8 +1,8 @@
-//REMAINING: CHECK DELETE, CHECK POP, MEDIAQUERY, AND PLAY/PAUSE IN LIST
+//REMAINING: MEDIAQUERY, AND PLAY/PAUSE IN BUTTONS,
 
 import 'package:flutter/material.dart';
-import 'package:project_new/audio_provider.dart';
-import 'package:project_new/audio_screen.dart';
+import 'package:sound_sweep/audio_provider.dart';
+import 'package:sound_sweep/audio_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Sound Sweep',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

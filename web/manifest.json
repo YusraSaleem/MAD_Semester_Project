@@ -1,6 +1,6 @@
 {
-    "name": "project_new",
-    "short_name": "project_new",
+    "name": "sound_sweep",
+    "short_name": "sound_sweep",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

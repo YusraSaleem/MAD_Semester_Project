@@ -1,8 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:project_new/audio.dart';
-import 'package:project_new/audio_db.dart';
-import 'package:project_new/audio_provider.dart';
+import 'package:sound_sweep/audio.dart';
+import 'package:sound_sweep/audio_db.dart';
+import 'package:sound_sweep/audio_provider.dart';
 import 'package:provider/provider.dart';
 
 class SaveScreen extends StatefulWidget {
@@ -75,7 +75,7 @@ class _SaveScreenState extends State<SaveScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Noise Reduction App"),
+        title: const Text("Sound Sweep"),
       ),
       body: FutureBuilder(
         future: context.read<AudioProvider>().loadAudios(),
