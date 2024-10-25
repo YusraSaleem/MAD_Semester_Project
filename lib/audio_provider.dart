@@ -24,9 +24,4 @@ class AudioProvider with ChangeNotifier {
     _audios.removeWhere((audio) => audio.id == id);
     notifyListeners();
   }
-
-  // removeAll() {
-  //   _audios.clear();
-  //   notifyListeners();
-  // }
 }

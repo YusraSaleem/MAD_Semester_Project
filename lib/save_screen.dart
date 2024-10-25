@@ -1,9 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sound_sweep/audio.dart';
 import 'package:sound_sweep/audio_db.dart';
 import 'package:sound_sweep/audio_provider.dart';
-import 'package:provider/provider.dart';
 
 class SaveScreen extends StatefulWidget {
   const SaveScreen({super.key});
@@ -27,10 +27,10 @@ class _SaveScreenState extends State<SaveScreen> {
 
   _loadAudios() async {
     final audiolist =
-        await db.getAllAudios(); //fetch todos from DB and store it
+        await db.getAllAudios(); //fetch audios from DB and store it
     setState(() {
       audios = audiolist;
-      isPlayingList = List.filled(audios.length, false);
+      isPlayingList = List.filled(audios.length, false); //fills the list with
     });
   }
 
@@ -39,6 +39,13 @@ class _SaveScreenState extends State<SaveScreen> {
       try {
         await _audioPlayer.play(DeviceFileSource(audios[index].path));
         print(audios[index].path);
+
+        _audioPlayer.onPlayerComplete.listen((event) {
+          setState(() {
+            isPlayingList[index] =
+                false; // update the icon when audio finishes //as soon as audio finishes it should stop
+          });
+        });
       } catch (e) {
         print(e);
       }
@@ -57,7 +64,7 @@ class _SaveScreenState extends State<SaveScreen> {
     setState(() {
       isPlayingList[index] = !isPlayingList[index];
 
-      /// EXCEPTION HERE
+      /// EXCEPTION HERE. Solved
     });
   }
 
@@ -74,8 +81,9 @@ class _SaveScreenState extends State<SaveScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Sound Sweep"),
+        title: const Text('Save Audio'),
+        backgroundColor: const Color.fromARGB(255, 1, 33, 75),
+        foregroundColor: const Color.fromARGB(255, 45, 198, 245),
       ),
       body: FutureBuilder(
         future: context.read<AudioProvider>().loadAudios(),
@@ -86,7 +94,7 @@ class _SaveScreenState extends State<SaveScreen> {
                     CircularProgressIndicator()); // Show a loading indicator while fetching
           } else if (snapshot.hasError) {
             return Center(
-                child: Text('Error: ${snapshot.error}')); // Handle any errors
+                child: Text('Error: ${snapshot.error}')); // Show if any errors
           }
 
           final audios = context
@@ -104,23 +112,38 @@ class _SaveScreenState extends State<SaveScreen> {
                 child: ListView.builder(
                   itemCount: audios.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(audios[index].name),
-                      subtitle: Text(audios[index].path),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          //await db.deleteAudio(audios[index].id!);
-                          context.read<AudioProvider>().removeAudio(audios[
-                                  index]
-                              .id!); //not context.watch b/c we dont need updates
-                        },
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.width * 0.02,
+                          left: MediaQuery.of(context).size.width * 0.04,
+                          right: MediaQuery.of(context).size.width * 0.04),
+                      child: Card(
+                        color: const Color.fromARGB(255, 1, 33, 75),
+                        child: ListTile(
+                          title: Text(audios[index].name,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 93, 211, 247),
+                              )),
+                          //subtitle: Text(audios[index].path),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Color.fromARGB(255, 93, 211, 247)),
+                            onPressed: () {
+                              //await db.deleteAudio(audios[index].id!);
+                              context.read<AudioProvider>().removeAudio(audios[
+                                      index]
+                                  .id!); //not context.watch b/c we dont need updates
+                            },
+                          ),
+                          leading: IconButton(
+                              onPressed: () => playAudioAgain(index),
+                              icon: Icon(
+                                  isPlayingList[index]
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: Color.fromARGB(255, 93, 211, 247))),
+                        ),
                       ),
-                      leading: IconButton(
-                          onPressed: () => playAudioAgain(index),
-                          icon: Icon(isPlayingList[index]
-                              ? Icons.pause
-                              : Icons.play_arrow)),
                     );
                   },
                 ),

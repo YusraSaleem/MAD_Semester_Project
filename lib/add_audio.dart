@@ -1,12 +1,9 @@
-//import 'dart:io';
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sound_sweep/audio.dart';
 import 'package:sound_sweep/audio_provider.dart';
-import 'package:provider/provider.dart';
 
 class AddAudio extends StatefulWidget {
   final String? outputFile;
@@ -29,6 +26,7 @@ class _AddAudioState extends State<AddAudio> {
     oldOutputPath = widget.outputFile;
 
     // Add listener to the first text field
+    //This was done to show the path of file with the custom name, which is now commented
     nc.addListener(() async {
       // Call the function and set the value for the second text field
       //String name = nc.text;
@@ -86,18 +84,11 @@ class _AddAudioState extends State<AddAudio> {
               Audio(name: nc.text, path: outputFilePath),
             );
 
-        // setState(() {
-        //   _isSaved = true;
-        // });
-
         print(
             'Audio saved as ${nc.text} at $oldOutputPath'); //outputfile path is still empty
       } catch (e) {
         print(e);
       }
-      // } else {
-      //   print('No reduced audio to save');
-      // }
     }
   }
 
@@ -105,41 +96,59 @@ class _AddAudioState extends State<AddAudio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Noise reduction App"),
+        title: const Text('Saved Audios'),
+        backgroundColor: const Color.fromARGB(255, 1, 33, 75),
+        foregroundColor: const Color.fromARGB(255, 45, 198, 245),
       ),
       body: Form(
         key: _key,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TextFormField(
-              controller: nc,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Name",
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width *
+                    0.05, // 5% of screen width
+                vertical: MediaQuery.of(context).size.height *
+                    0.02, // 2% of screen height
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please enter a name";
-                }
-              },
-            ),
-            TextFormField(
-              controller: pc,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Path",
+              child: TextFormField(
+                controller: nc,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter a name";
+                  }
+                },
               ),
-              readOnly: true,
             ),
+            // TextFormField(
+            //   controller: pc,
+            //   decoration: const InputDecoration(
+            //     border: OutlineInputBorder(),
+            //     labelText: "Path",
+            //   ),
+            //   readOnly: true,
+            // ),
             ElevatedButton(
               onPressed: () {
                 if (_key.currentState!.validate()) {
-                  saveReducedAudio(); //print on debug console NOT on screen
-                  // CHECK IF POP SHOULD BE USED
-                  Navigator.pop(context); //// CHECK THIS
+                  saveReducedAudio();
+
+                  Navigator.pop(context);
                 }
-              }, //call insert method here
-              child: const Text("Add"),
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    const Color.fromARGB(255, 1, 33, 75), // Button color
+              ),
+              child: const Text(
+                'Save',
+                style: TextStyle(color: Color.fromARGB(255, 93, 211, 247)),
+              ),
             ),
           ],
         ),
