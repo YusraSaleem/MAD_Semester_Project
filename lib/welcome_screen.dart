@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sound_sweep/audio_screen.dart';
-import 'package:sound_sweep/save_screen.dart';
+import 'audio_screen.dart';
+import 'save_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

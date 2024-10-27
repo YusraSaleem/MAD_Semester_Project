@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sound_sweep/audio.dart';
-import 'package:sound_sweep/audio_db.dart';
+import 'audio.dart';
+import 'audio_db.dart';
 
 class AudioProvider with ChangeNotifier {
   List<Audio> _audios = [Audio(name: "sample", path: "samplePath")];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sound_sweep/audio_provider.dart';
-import 'package:sound_sweep/splash_screen.dart';
+import 'audio_provider.dart';
+import 'splash_screen.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
