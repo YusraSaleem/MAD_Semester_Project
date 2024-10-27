@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:sound_sweep/audio.dart';
+import 'audio.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AudioDatabase {

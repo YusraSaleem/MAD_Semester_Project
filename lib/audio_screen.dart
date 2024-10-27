@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sound_sweep/add_audio.dart';
+import 'add_audio.dart';
 
 class AudioScreen extends StatefulWidget {
   const AudioScreen({super.key});

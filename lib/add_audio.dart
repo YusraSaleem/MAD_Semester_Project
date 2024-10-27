@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:sound_sweep/audio.dart';
-import 'package:sound_sweep/audio_provider.dart';
+import 'audio.dart';
+import 'audio_provider.dart';
 
 class AddAudio extends StatefulWidget {
   final String? outputFile;
@@ -138,7 +138,7 @@ class _AddAudioState extends State<AddAudio> {
                 if (_key.currentState!.validate()) {
                   saveReducedAudio();
 
-                  Navigator.pop(context);
+                  Navigator.popUntil(context, (route) => route.isFirst);
                 }
               },
               style: ElevatedButton.styleFrom(
